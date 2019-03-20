@@ -1,6 +1,6 @@
-# 360pai
+# nuxt
 
-> My marvelous Nuxt.js project
+> nuxt启动项目
 
 ## Build Setup
 
