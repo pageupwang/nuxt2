@@ -1,149 +1,12 @@
 <template>
   <div id="index">
-    <keep-alive>
-      <banner :bannerFrame="navList" :helps='helps'></banner>
-    </keep-alive>
-    <div class="mian">
-      <king-kong></king-kong>
-      <indexTitle style="margin: 40px 0 21px" title='热门拍品' word='全网联拍' id='title1'></indexTitle>
-      <hot-sale :navList="navList"></hot-sale>
-    </div>
-    <div class="auction">
-      <div class="auction-tit">
-        <div class="auction-tit-l fl"><indexTitle title='拍卖专场' word='全网联拍' id='title2'></indexTitle></div>
-        <div class="auction-tit-r fl" v-if='!agencyCode'>金牌商家</div>
-        <div class="auction-tit-r fl" v-else>公司简介</div>
-      </div>
-      <div class="auction-main" style='background: none;min-height: 516px;'>
-        <div class="auction-lf">
-          <auctionBanner :session="session"></auctionBanner>
-        </div>
-        <div class="auction-rg" style='width: 406px;padding-left: 4px;'>
-          <advertisement v-if='!agencyCode'></advertisement>
-          <router-link v-else to="/companyProfile">
-            <img :src="agencyInfo.imageUrl" alt="">
-          </router-link>
-        </div>
-      </div>
-      <div class="bank-frame">
-        <div class="bank-item">
-          <a href="http://www.chamc.com.cn" target='_blank'>
-            <img src="../../assets/img/bank1.png" alt="">
-          </a>
-          
-        </div>
-        <div class="bank-item">
-          <a href="http://www.cinda.com.cn" target='_blank'>
-            <img src="../../assets/img/bank2.png" alt="">
-          </a>
-         
-        </div>
-        <div class="bank-item">
-          <a href="http://www.gwamcc.com" target='_blank'>
-            <img src="../../assets/img/bank3.png" alt="">
-          </a>
-        </div>
-        <div class="bank-item" style="margin: 0;">
-          <a href="http://www.coamc.com.cn" target='_blank'>
-            <img src="../../assets/img/bank4.png" alt="">
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="auction-frame frame-center">
-      <indexTitle title='拍卖大厅' id='title3'></indexTitle>
-      <div class="auction-main" >
-        <div class="auction-lf fl">
-          <seek :type="1" :navList="navList"></seek>
-          <showAdvert :banner="bannerSecond"></showAdvert>
-        </div>
-        <div class="auction-center fl">
-          <auction :navList="navList"></auction>
-        </div>
-        <div class="auction-rg fl">
-          <rank :rankList="aboutRank" title="2"></rank>
-        </div>
-      </div>
-    </div>
-    <div class="auction-frame frame-center">
-      <indexTitle title='全网招商' id='title4'></indexTitle>
-      <div class="auction-main">
-        <div class="auction-lf fl">
-          <seek :type="2" :navList="navList"></seek>
-          <showAdvert :banner="bannerThird"></showAdvert>
-        </div>
-        <div class="auction-center fl">
-          <div class="auction-frame">
-            <div class="auction-tit">
-              <p :class="{'active':attractChecked==item.id}" v-for="(item,index) in attractTitle" :key='index' @click="attractChange(item.id)" >{{item.hallName}}</p>
-            </div>
-            <div class="auction-item">
-              <indexItem v-for="(item,index) in attractMain" :key='index' :data="item"></indexItem>
-            </div>
-          </div>
-        </div>
-        <div class="auction-rg fl">
-          <rank :rankList="attractRank" title="1"></rank>
-        </div>
-      </div>
-    </div>
-    <div class="service-frame frame-center">
-      <indexTitle title='服务招标专区' id='title5'></indexTitle>
-      <div class="service-main">
-        <div class="service-lf fl">
-          <div class="service-img">
-            <img src="../../assets/img/service-img.jpg">
-            <span>处置服务商投标专区</span>
-            <router-link to='/member/applyHandleServer' class="service-btn">服务商加盟入口</router-link>
-            <router-link to='/member/lookService' class="service-btn service-blue">我要发布需求</router-link>
-          </div>
-         
-        </div>
-        <div class="service-rg fr">
-          <service></service>
-        </div>
-      </div>
-    </div>
-    <div class="headlines-frame frame-center">
-      <indexTitle title='360PAI今日头条' id='title6'></indexTitle>
-      <div class="new-main">
-        <headLine></headLine>
-      </div>
-    </div>
-    <detailSlide :tabTit='slides'>
-      <div slot='code' class='slides'>
-        <div class="slides-item slides-code">
-          <span style='padding-top: 10px;'>
-             <img src="../../assets/img/code.png" alt="公众二维码">
-          </span>
-          <div class="code">
-            <img src="../../assets/img/code.png" alt="公众二维码">
-          </div>
-        </div>
-      </div>
-    </detailSlide>
+    <ul>
+      <li v-for="(item,index) in navList" :key='index'>12</li>
+    </ul>
   </div>
 </template>
 
 <script>
-  import searchItem from '../../components/searchItem'
-  import banner from './components/banner'
-  import kingKong from './components/kingKong'
-  import hotSale from './components/hotSale'
-  import indexTitle from './components/indexTitle'
-  import auctionBanner from './components/auctionBanner'
-  import advertisement from './components/advertisement'
-  import rank from './components/rank'
-  import auction from './components/auction'
-  import service from './components/service'
-  import headLine from './components/headLine'
-  import showAdvert from './components/showAdvert'
-  import indexItem from './components/indexItem'
-  import magnifierImg from './components/magnifierImg'
-  import seek from './components/seek'
-  import detailSlide from '../../components/detailSlide'
-  import {rankList,attractMain,getNav,auctionSession,auctionList,getBanner} from '../../api/open/attract'
-  import {SetCookie} from "../../assets/js/tools";
   import axios from '../../plugins/axios'
   export default {
     async asyncData () {
@@ -158,14 +21,6 @@
       // console.log(navs);
       // let navs=data
       return {
-        helps: [
-          {type: '如何参拍', text: '如何参拍', path: '/help/problem',navid:11,id:58},
-          {type: '保证金支付', text: '保证金支付', path: '/help/problem',navid:13,id:35},
-          {type: '保证金退回', text: '保证金退回', path: '/help/problem',navid:13,id:37},
-          {type: '竞价规则', text: '债权交割', path: '/help/problem',navid:11,id:47},
-          {type: '成交规则', text: '拍卖流程', path: '/help/problem',navid:11,id:58},
-          {type: '常见问题', text: '拍卖方式', path: '/help/problem',navid:10,id:42},
-        ],
         navList:navs.data.content,
         attractTitle:navs.data.content.enrolling_hall_type,
         attractChecked:navs.data.content.enrolling_hall_type[0].id,
@@ -173,150 +28,21 @@
       }
     },
     name: "index",
-    props:['agencyInfo','agencyCode'],
     data() {
       return {
-        //预招商
-        attractRank:[],
-        attractTitle:[],
-        attractChecked: "",
-        attractMain: [],
-        navList:[],
-        //拍卖专场
-        session : [],
-        aboutRank: [],
-        bannerSecond: [],
-        bannerThird: [],
-        slides:[
-          {tit: '热门拍品', dom: "title1"},
-          {tit: '拍卖专场', dom: "title2"},
-          {tit: '拍卖大厅', dom: "title3"},
-          {tit: '全网招商', dom: "title4"},
-          {tit: '服务招标', dom: "title5"},
-          {tit: '今日头条', dom: "title6"},
-        ],
+      
       }
     },
     components:{
-      searchItem,
-      banner,
-      kingKong,
-      hotSale,
-      indexTitle,
-      auctionBanner,
-      advertisement,
-      service,
-      headLine,
-      rank,
-      auction,
-      showAdvert,
-      indexItem,
-      magnifierImg,
-      seek,
-      detailSlide,
     },
     mounted(){
 
     },
     methods:{
-      // 获取首页数据
-      getIndex(){
-        getNav().then(res => {
-          let data = res.data;
-          if (data.code === '000') {
-            this.navList = data.content;
-            this.attractTitle = data.content.enrolling_hall_type;
-            this.attractChecked = this.attractTitle[0].id;
-            this.getAttractMain(this.attractChecked);
-          } else {
-
-          }
-        }).catch(err => {
-          console.log(err);
-        });
-        //拍卖专场
-        // auctionSession().then(res => {
-        //   let data = res.data;
-        //   if (data.code === '000') {
-        //     this.session = data.content.list;
-        //   } else {
-        //
-        //   }
-        // }).catch(err => {
-        //   console.log(err);
-        // })
-      },
-      //预招商tab切换
-      attractChange(tabId){
-        if(tabId == this.attractChecked){
-          return false
-        }
-        this.attractChecked = tabId;
-        this.getAttractMain(this.attractChecked);
-      },
-      //预招商内容
-      getAttractMain(tabId){
-        attractMain(tabId).then(res => {
-          let data = res.data
-          if (data.code === '000') {
-            this.attractMain = data.content.homeList;
-          } else {
-
-          }
-        }).catch(err => {
-          console.log(err);
-        })
-      },
-
-
-      getAttractRank(){
-        //获取拍卖大厅排行
-        auctionList().then(res => {
-          let data = res.data
-          if (data.code === '000') {
-            this.aboutRank = data.content.list;
-          } else {
-
-          }
-        }).catch(err => {
-          console.log(err);
-        })
-        //获取预招商排行榜
-        rankList().then(res => {
-          let data = res.data
-          if (data.code === '000') {
-            this.attractRank = data.content.list;
-          } else {
-
-          }
-        }).catch(err => {
-          console.log(err);
-        });
-        getBanner(2,3).then(res => {
-          let data = res.data
-          if (data.code === '000') {
-            this.bannerSecond = data.content.list;
-          } else {
-
-          }
-        }).catch(err => {
-          console.log(err);
-        })
-        getBanner(2,4).then(res => {
-          let data = res.data
-          if (data.code === '000') {
-            this.bannerThird = data.content.list;
-          } else {
-
-          }
-        }).catch(err => {
-          console.log(err);
-        })
-      }
+    
     },
     created(){
-      this.getIndex();
-      this.getAttractRank();
+    
     },
   }
 </script>

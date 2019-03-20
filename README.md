@@ -1,6 +1,6 @@
 # nuxt
 
-> nuxt启动项目
+> nuxt启动项目 
 
 ## Build Setup
 
