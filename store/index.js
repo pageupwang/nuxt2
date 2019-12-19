@@ -1,19 +1,11 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import mutations from './mutations/mutations'
-import actions from './actions'
-
-let initState = {
-
-};
-
-
-Vue.use(Vuex)
-let state = initState
-export default ()=>{
-  return  new Vuex.Store({
-    state: state,
-    mutations: mutations,
-    actions: actions,
-  })
+export const actions = {
+  nuxtServerInit(store, {req}) {
+    return Promise.all([
+      store.dispatch('public/getNav'),
+      store.dispatch('public/setProvince'),
+      store.dispatch('public/getIndexBuyer'),
+      store.dispatch('public/getIndexSchool'),
+      store.dispatch('public/getIndexPay'),
+    ])
+  },
 }

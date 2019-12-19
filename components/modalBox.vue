@@ -12,7 +12,7 @@
       <div class="contain">
         <slot></slot>
       </div>
-      <div class="close-btn" @click='close'>
+      <div class="close-btn" v-if='!noClose' @click='close'>
         X
       </div>
     </div>
@@ -22,7 +22,7 @@
 <script>
   export default {
     name: "modalBox",
-    props: ['width', 'title','modalFlag'],
+    props: ['width', 'title','modalFlag','noClose'],
     methods:{
       close(){
         this.$emit('update:modalFlag', false)
@@ -66,7 +66,7 @@
         position: absolute;
         font-size: 20px;
         right: 20px;
-        top: 3px;
+        top: 8px;
         transform:scaleX(1.5);
         color: #fff;
         cursor: pointer;

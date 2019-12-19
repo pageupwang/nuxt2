@@ -10,17 +10,16 @@
       <div class="operation fl">
         <div class="input clearfix">
           <input type="text" class=" fl" :value="query" @input='inputs'>
-          <div class="search-btn fr" @click='searchquery' v-if='$route.path=="/search"'><img src="../assets/img/icon/search-icon.png" alt=""></div>
-          <div class="search-btn fr" @click='toSearch' v-else><img src="../assets/img/icon/search-icon.png" alt=""></div>
+          <div class="search-btn fr" @click='searchquery' v-if='$route.path=="/search"'><img
+            src="../assets/img/icon/search-icon.png" alt=""></div>
+          <div class="search-btn fr" @click='toSearch' v-else><img src="../assets/img/icon/search-icon.png" alt="">
+          </div>
         </div>
       </div>
-      <a  class="follow fr" href='javascript:;' style='cursor: pointer;' @click='checkCanUploadtype'>
+      <a class="follow fr" href='javascript:;' style='cursor: pointer;' @click='checkCanUploadtype'>
         我要卖货
       </a>
-      <!--<router-link tag='div' class="follow myCollect" to="/myCollect" style='cursor: pointer;'>-->
-      <!--我的关注-->
-      <!--</router-link>-->
-    
+   
     </div>
     <div v-else class="search clearfix">
       <router-link to='/' class='logo fl' style='width: 60px;height: 60px;'>
@@ -32,12 +31,14 @@
       <div class="fl" style='line-height: 60px;margin-left: 12px;'>
         <img src="../assets/img/compony-tip.png" alt="" style='vertical-align: middle;'>
       </div>
-     
+      
       <div class="operation fl" style='margin-top: 15px;'>
         <div class="input clearfix" id='search'>
           <input type="text" class=" fl" :value="query" @input='inputs' style='width: 360px;'>
-          <div class="search-btn fr" @click='searchquery' v-if='$route.path=="/search"'><img src="../assets/img/icon/search-icon.png" alt=""></div>
-          <div class="search-btn fr" @click='toSearch' v-else><img src="../assets/img/icon/search-icon.png" alt=""></div>
+          <div class="search-btn fr" @click='searchquery' v-if='$route.path=="/search"'><img
+            src="../assets/img/icon/search-icon.png" alt=""></div>
+          <div class="search-btn fr" @click='toSearch' v-else><img src="../assets/img/icon/search-icon.png" alt="">
+          </div>
         </div>
       </div>
       <router-link tag='div' class="follow fr" to="/member/myAuction" style='cursor: pointer;margin-top: 16px;'>
@@ -45,35 +46,35 @@
       </router-link>
     </div>
     <div class="nav clearfix" v-if="!($route.path.indexOf('help')>-1)">
-      <div class="navbar fl" >
+      <div class="navbar fl">
         <router-link to="/" :class="{'home-link':true,'active':$route.path=='/'||$route.path=='/index'}">
           <template v-if='!agencyCode'>
             360PAI 首页
           </template>
-         <template v-else>
-           首页
-         </template>
-         
+          <template v-else>
+            首页
+          </template>
         </router-link>
-        <span v-for="(item,indexs) in navs"
-              :key='indexs'
-              :class="{'home-link':true,'active':id==item.id}" @click='routeChange(item)'>
-          {{item.name}}
+        <span :class="{'home-link':true,'active':$route.path=='/leaseList'}" @click='torelease'>
+        租赁权拍卖
+        <img src="/static/img/member/HOT.png" alt="" class='icon'>
+        </span>
+        <span :class="{'home-link':true,'active':$route.path=='/leaseMerchant'}" @click='toleaseMerchant'>
+        租赁权招商
         </span>
         <span :class="{'home-link':true,'active':$route.path=='/searchs'&&!id}" @click='tohall'>拍卖大厅</span>
+        <router-link to='/merchant' :class="{'home-link':true,'active':$route.path=='/merchant'}">
+          转让大厅
+        </router-link>
         <router-link to='/disposalServices' :class="{'home-link':true,'active':$route.path=='/disposalServices'}">
-          处置服务投标专区
+          360PAI服务商
+        
+        </router-link>
+        <router-link to='/mechanismList' :class="{'home-link':true,'active':$route.path=='/mechanismList'}">
+          360PAI联拍机构
         </router-link>
       </div>
-      <!--<div class="navbar fl" v-else>-->
-        <!--<router-link to="/index"-->
-                     <!--:class="{'home-link':true}">-->
-          <!--返回首页-->
-        <!--</router-link>-->
-      <!--</div>-->
-      <!--<div class="fr nav-btn">-->
-      <!--<router-link class="btn" :to='item.path' v-for="(item,index) in navBtn" :key='index'>{{item.name}}</router-link>-->
-      <!--</div>-->
+    
     </div>
     <modalBox :modalFlag="prop" @close='close' title='选择委托人'>
       <div class="form-item">
@@ -92,32 +93,24 @@
   import topbar from './topbar'
   import modalBox from './modalBox'
   import {mapState} from 'vuex'
-  import {searchNav} from '../api/open/search'
-  import {getCode} from '../assets/js/config'
-  import $ from 'jquery'
+
+  
   export default {
     name: "topBar",
-    props: ['agencyInfo','agencyCode'],
     components: {
       topbar,
       modalBox,
     },
     data() {
       return {
-        prop:false,
+        prop: false,
         number: 0,
-        list:[],
+        list: [],
         bars: [
           {name: '帮助中心', path: '/help/service'},
           {name: '新闻中心', path: '/news'},
           {name: '会员中心', path: '/member'},
           {name: '登录注册', path: '/login'},
-        ],
-        navs: [
-          {name: '银行债权', path: '/searchs', id: 1},
-          {name: 'AMC债权', path: '/searchs', id: 2},
-          {name: '民营资管债权', path: '/searchs', id: 3},
-          {name: '个人债权', path: '/searchs', id: 4},
         ],
         navBtn: [
           {name: '拍卖大厅', path: '/searchs'},
@@ -125,17 +118,21 @@
           {name: '处置服务竞价专区', path: '/disposalServices'},
         ],
         username: '测试用户',
-        search:'',
-        query:'',
+        search: '',
+        query: '',
+
       }
     },
     methods: {
+      
+      
       //判断能否上传拍品
       checkCanUploadtype() {
         this.$router.push({path: '/member/myAuction'})
       },
+      
       submitMain() {
-        this.prop=false
+        this.prop = false
         this.$router.push({path: '/member/myAuction', query: {spvId: this.number}})
       },
       close() {
@@ -145,34 +142,31 @@
         this.$router.push({path: '/searchs'})
         this.$store.commit('resetSearch')
       },
-      getNav() {
-        searchNav().then(res => {
-          let data = res.data
-          this.nav = data.content.asset_party_category
-        }).catch(err => {
-          console.log(err);
-        })
-      },
+      
       inputs(e) {
-        this.search=e.target.value
+        this.search = e.target.value
       },
-      searchquery(){
-        this.$router.push({path: '/search',query:{ query : this.search }})
+      searchquery() {
+        this.$router.push({path: '/search', query: {query: this.search}})
         // this.$store.commit('inputSeach',this.search )
       },
       toSearch() {
-        this.$router.push({path: '/search',query:{ query : this.search }})
+        this.$router.push({path: '/search', query: {query: this.search}})
       },
-      routeChange(item) {
+      torelease() {
         this.$store.commit('resetSearch')
-        this.$store.commit('changeCategory', {id: item.id || 0, name: item.name || ""})
-        this.$router.push({path: item.path})
+        this.$store.commit('changeAsset_groups', {id: "-1", name: "租赁权拍卖"})
+        this.$router.push({path: '/leaseList'})
+      },
+      toleaseMerchant(){
+        this.$store.commit('resetMerchant')
+        this.$router.push({path: '/leaseMerchant'})
       },
       
     },
-    mounted() {
-      this.query=this.$route.query.query||''
-      this.getNav()
+    created() {
+      this.query = this.$route.query.query || ''
+
     },
     computed: {
       isMember() {
@@ -180,19 +174,16 @@
       },
       ...mapState({
         id: state => state.search.asset_party_category.id,
-        // query: state => state.search.query,
+        category_group_id: state => state.search.category_group_id.id,
+        agencyCode: state => state.agencyCode,
+        agencyInfo: state => state.agencyInfo,
+        
       }),
     },
-    watch:{
-      agencyInfo:function () {
-        setTimeout(function () {
-          let inputW=1200-60-15-$('.company-name').width()-238-178-45-10
-          $('#search').width(inputW)
-          $('#search input').width(inputW-30)
-        },0)
-      },
-      $route:function () {
-        this.query=this.$route.query.query||''
+    watch: {
+     
+      $route: function () {
+        this.query = this.$route.query.query || ''
       }
     },
   }
@@ -200,6 +191,7 @@
 
 <style scoped lang='scss'>
   @import '../assets/css/$var';
+  
   .form-item {
     /*margin-bottom: 17px;*/
     padding-top: 30px;
@@ -211,6 +203,7 @@
       margin-right: 38px;
     }
   }
+  
   .select-frame {
     width: 226px;
     height: 28px;
@@ -224,12 +217,12 @@
     outline: none;
     border: none;
   }
-
+  
   .operations {
     text-align: center;
     padding: 40px 0 20px;
   }
-
+  
   .btn {
     display: inline-block;
     line-height: 40px;
@@ -246,9 +239,10 @@
     -ms-user-select: none;
     user-select: none;
   }
+  
   #topBar {
     background-color: #f5f5f5;
-   
+    
   }
   
   .advertisement {
@@ -380,7 +374,7 @@
         vertical-align: top;
       }
     }
-    .company-name{
+    .company-name {
       color: #333333;
       font-size: 28px;
       line-height: 60px;
@@ -411,7 +405,7 @@
           right: 1px;
           width: 50px;
           height: 36px;
-          background-color: #d41723;
+          background-color: #b72e29;
           border-radius: 3px;
           text-align: center;
           img {
@@ -468,10 +462,19 @@
         display: inline-block;
         font-size: 20px;
         font-family: 'Microsoft YaHei UI Light';
-        margin-right: 40px;
+        margin-right: 33px;
         color: #333;
+        position: relative;
         &.active {
           color: $red;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+        .icon {
+          position: absolute;
+          right: -25px;
+          top: -10px;
         }
       }
     }

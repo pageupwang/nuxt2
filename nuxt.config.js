@@ -1,5 +1,8 @@
 
 export default {
+  router: {
+    middleware: 'confined'
+  },
   mode: 'universal',
   /*
   ** Headers of the page
@@ -24,8 +27,7 @@ export default {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    '~/assets/css/reset.css',
-    '~/assets/css/index.css',
+    '~/assets/css/pc-base.css',
     '~/static/font/iconfont.css',
   ],
   /*
@@ -33,21 +35,21 @@ export default {
   */
   plugins: [
     '@/plugins/element-ui',
-    { src: '~/plugins/localStorage', ssr: false },
-    { src: '~/plugins/axios', ssr: false },
+    '@/plugins/axios',
+    { src: '~/plugins/localStorage', mode: 'client'},
   ],
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000'
   },
   proxy: {
-    '/fzyq-web': {
+    '/rest-web': {
       // target: 'http://172.17.102.27:6086',//冬冬
-      target: 'http://supportcloud.360yhl.test',//沈威
+      // target: 'http://supportcloud.360yhl.test',//沈威
       //  target: 'https://www.360aidata.com',//沈威
-      //target: 'http://192.168.1.104:6086',//传奇
+      target: 'https://www.360pai.com',//传奇
       changeOrigin: true,
       pathRewrite: {
-        '^/fzyq-web': '/fzyq-web'
+        '^/rest-web': '/rest-web'
       }
     },
   },
@@ -70,12 +72,14 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    proxy: true
+    proxy: true,
+    retry: { retries: 1 }//失败重试次数
   },
   /*
   ** Build configuration
   */
   build: {
+    vendor: ['axios'],
     transpile: [/^element-ui/],
     /*
     ** You can extend webpack config here

@@ -7,23 +7,15 @@
 </template>
 
 <script>
-  import axios from '../../plugins/axios'
+
   export default {
-    async asyncData () {
+    async asyncData ({$axios}) {
       let [navs,sessions]= await Promise.all([
-        axios.get(`/rest-web/open/nav`),
-        axios.get(`/rest-web/open/album/sticky/list`)
+        $axios.get(`/open/nav`),
+        $axios.get(`/open/album/sticky/list`)
       ])
-      //   this.navList = data.content;
-      //     this.attractTitle = data.content.enrolling_hall_type;
-      //     this.attractChecked = this.attractTitle[0].id;
-      //     this.getAttractMain(this.attractChecked);
-      // console.log(navs);
-      // let navs=data
       return {
         navList:navs.data.content,
-        attractTitle:navs.data.content.enrolling_hall_type,
-        attractChecked:navs.data.content.enrolling_hall_type[0].id,
         session:sessions.data.content.list,
       }
     },

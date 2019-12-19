@@ -6,6 +6,7 @@ let capitalize = (money) => {
   if(!text.test(money)){
     return '数值错误或金额过大';
   }
+  money = String(Number(money).toFixed(2));
   //汉字的数字
   var cnNums = new Array('零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖');
   //基本单位
@@ -90,4 +91,114 @@ let capitalize = (money) => {
   }
   return chineseStr;
 }
-export {capitalize}
+
+
+let moneyFormat = (money) => {
+  if (money == ''){
+    return '无'
+  }else{
+    if(money != null && money != 'undefined'){
+      money = money.toString().replace(/,/g, "");
+    }
+    let num = parseFloat(money);
+    let strNum = parseFloat("a");
+    if (num.toString() != strNum.toString()){
+      if(num == 0){
+        return "无"
+      }else{
+        if(num >= 100000000){
+          let amount = num/100000000;
+          let arr = (num/100000000).toString();
+          if (arr.indexOf(".") > 0){
+            let strh = arr.substring(arr.indexOf(".") + 1, arr.indexOf(".") + 9);
+            let str = parseInt(arr);
+            num = '￥' + str.toLocaleString() + '.' + strh + "亿"
+          }else{
+            num = '￥' + amount.toLocaleString() + "亿"
+          }
+        }else{
+          if(num >= 10000){
+            let amount = num/10000;
+            let arr = (num/10000).toString();
+            if (arr.indexOf(".") > 0){
+              let strh = arr.substring(arr.indexOf(".") + 1, arr.indexOf(".") + 5);
+              let str = parseInt(arr);
+              num = '￥' + str.toLocaleString() + '.' + strh + "万"
+            }else{
+              num = '￥' + amount.toLocaleString() + "万"
+            }
+          }else{
+            num = '￥' + num.toLocaleString() + "";
+          }
+        }
+        return num
+      }
+    }else{
+      return "无"
+    }
+  }
+}
+let moneyForma = (money) => {
+  if (money == ''){
+    return '无'
+  }else{
+    if(money != null && money != 'undefined'){
+      money = money.toString().replace(/,/g, "");
+    }
+    let num = parseFloat(money);
+    let strNum = parseFloat("a");
+    if (num.toString() != strNum.toString()){
+      if(num == 0){
+        return "无"
+      }else{
+        if(num >= 100000000){
+          let amount = num/100000000;
+          let arr = (num/100000000).toString();
+          if (arr.indexOf(".") > 0){
+            let strh = arr.substring(arr.indexOf(".") + 1, arr.indexOf(".") + 9);
+            let str = parseInt(arr);
+            num = str.toLocaleString() + '.' + strh + "亿"
+          }else{
+            num = amount.toLocaleString() + "亿"
+          }
+        }else{
+          if(num >= 10000){
+            let amount = num/10000;
+            let arr = (num/10000).toString();
+            if (arr.indexOf(".") > 0){
+              let strh = arr.substring(arr.indexOf(".") + 1, arr.indexOf(".") + 5);
+              let str = parseInt(arr);
+              num = str.toLocaleString() + '.' + strh + "万"
+            }else{
+              num = amount.toLocaleString() + "万"
+            }
+          }else{
+            num = num.toLocaleString()
+          }
+        }
+        return num
+      }
+    }else{
+      return "无"
+    }
+  }
+}
+let moneyD = (money) => {
+  if (money == ''){
+    return money
+  }else{
+    if(money != null && money != 'undefined'){
+      money = money.toString().replace(/,/g, "");
+    }
+    let num = parseFloat(money);
+    let strNum = parseFloat("a");
+    if (num.toString() != strNum.toString()){
+      num = num.toLocaleString()
+      return num
+    }else{
+      return money
+    }
+  }
+}
+
+export {capitalize,moneyFormat,moneyForma,moneyD}

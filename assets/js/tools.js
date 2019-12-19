@@ -35,6 +35,97 @@ export const checkCity = (id) => {
   
 }
 
+//资产大买办-根据建筑类型id获取建筑类型名称
+export const compradorRequirementBuildingType = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.compradorRequirementBuildingType[id] || ''
+}
+
+//资产大买办-根据状态id获取审核状态名称
+export const compradorRequirementStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.compradorRequirementStatus[id] || ''
+}
+//资产大买办-根据状态id获取审核状态名称
+export const compradorRecommenderStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.compradorRecommenderStatus[id] || ''
+}
+//资产大买办-根据债权种类id获取债权种类名称
+export const compradorRequirementTransactionMode = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.compradorRequirementTransactionMode[id] || ''
+}
+//配资乐-根据债权种类id获取债权种类名称
+export const withfudigRequirementAssetType = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.withfudigRequirementAssetType[id] || ''
+}
+//申请状态
+export const applyStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.applyStatus[id] || ''
+}
+//拍卖方式
+export const assetExpectedMode = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.assetExpectedMode[id] || ''
+}
+//拍卖状态
+export const auctionOrderStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.auctionActivityStatus[id] || ''
+}
+//配资乐状态
+export const withfudigRequirementStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.withfudigRequirementStatus[id] || ''
+}
+//拍卖状态
+export const auctionActivityStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.auctionActivityStatus[id] || ''
+}
+//处置类型
+export const disposeProviderService = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.disposeProviderService[id] || ''
+}
+//处置发布状态
+export const disposalRequirementStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.disposalRequirementStatus[id] || ''
+}
+//处置投标状态
+export const disposalBiddingStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.disposalBiddingStatus[id] || ''
+}
+//配资乐出资状态
+export const withfudigInvestStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.withfudigInvestStatus[id] || ''
+}//配资乐出资状态
+export const compradorRecommendStatus = (id) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  dic = JSON.parse(dic)
+  return dic.compradorRecommendStatus[id] || ''
+}
+
 //金额转换为三位一撇
 export const changeToThree = value => {
   if (typeof value == "number") {
@@ -49,3 +140,21 @@ export const changeToThree = value => {
     return value.replace(/[^\d.]+/g, '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
   }
 }
+//获取字典中的某一项转成{id,name}
+export const getDic = (key) => {
+  let dic = window.sessionStorage.getItem('dic') || {}
+  let arr=[{id:0,name:'全部'}]
+  try {
+    dic = JSON.parse(dic)
+  }
+  catch (e) {
+    return arr
+  }
+  let obj=dic[key]
+  for(let k in obj){
+    arr.push({id:k,name:obj[k]})
+  }
+  return arr
+}
+
+//时间转换成2018-09-09 9:09:09格式

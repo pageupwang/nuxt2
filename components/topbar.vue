@@ -1,3 +1,5 @@
+<script src="../../../deve/default/default/360pai/src/store/actions.js"></script>
+<script src="../../../deve/default/default/360pai/src/store/index.js"></script>
 <template>
   <div class='top clearfix' :style="{'background':bg?'#d7d6d6':'#f5f5f5'}">
     <div>
@@ -8,11 +10,11 @@
         </div>
         <div class='fr'>
           <template v-if='!agencyCode'>
-            <span  @click='tojigou' v-if="user.agencyId">机构登录</span>
+            <span  @click='tojigou' v-if="user.agencyId">机构后台登录</span>
           </template>
         </div>
         <div class="userInfo userInfo1" v-if='accountAuthName'>
-          <router-link to="/member"  class='username '>{{accountAuthName}}
+          <router-link to="/member"  class='username ' style='padding-right: 0;'>{{accountAuthName}}
             <img src="../assets/img/down.png"alt="">
           </router-link>
           <div class='btn-box'>
@@ -25,6 +27,7 @@
             </div>
             <button class="sc-iwsKbI cORWOV" @click='layout'>退出</button>
           </div>
+          <span style='color: #1e4097;font-size: 12px;padding-left: 0;' v-if='user.accountList.length!==1'>切换</span>
         </div>
         <div class="userInfo " v-else>
           <router-link to="/login" class='username'>
@@ -38,9 +41,7 @@
 </template>
 
 <script>
-  import {layOut} from '../api/common'
-  import {getCode,toPartner,deleteMainCookie} from '../assets/js/config'
-  import {changeRole} from '../api/confined/member'
+  import {agencyCode,toPartner,deleteMainCookie} from '../assets/js/config'
   import {mapState} from 'vuex'
   export default {
     name: "topbar",
@@ -50,7 +51,7 @@
         bars: [
           {name: '帮助中心', path: '/help/service'},
           {name: '新闻中心', path: '/news'},
-          {name: '会员中心', path: '/member'},
+          {name: '个人中心', path: '/member'},
           {name: '我的关注', path: '/myCollect'},
         ],
         agencyCode:'',
@@ -75,35 +76,41 @@
         })
       },
       changeUser(partyId){
-        let para = {
-          partyId:partyId
-        }
-        changeRole(para).then(res => {
-          let data = res.data
-          if (data.code === '000') {
-            this.$store.dispatch('getUser',true);
-          } else {
-            // this.$dialog.alert(data.desc)
-          }
-        }).catch(err => {
-          console.log(err);
-        })
+        // let para = {
+        //   partyId:partyId
+        // }
+        // changeRole(para).then(res => {
+        //   let data = res.data
+        //   if (data.code === '000') {
+        //     this.$store.dispatch('getUser',true);
+        //   } else {
+        //     this.$message.error(data.desc)
+        //   }
+        // }).catch(err => {
+        //   console.log(err);
+        // })
       },
       tojigou(){
         toPartner(true)
       },
       layout(){
-        layOut().then(res => {
-        }).catch(err => {
-          console.log(err);
-        }).finally(res=>{
-          deleteMainCookie()
-          this.$router.push({path: '/login' })
-        })
+        // layOut().then(res => {
+        //   let data=res.data
+        //   if(data.code=='000'){
+        //     deleteMainCookie()
+        //     this.$store.commit('restcomponeyFlag')
+        //     this.$router.push({path: '/login' })
+        //   }
+        // }).catch(err => {
+        //   console.log(err);
+        // }).finally(res=>{
+        //
+        //
+        // })
       },
     },
-    mounted(){
-      this.agencyCode=getCode()
+    created(){
+      this.agencyCode=agencyCode
     },
     computed: {
       ...mapState({

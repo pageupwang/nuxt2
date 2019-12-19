@@ -1,40 +1,4 @@
-import {applyPay,addlyFdd} from '../../api/confined/application'
-import {downStatistics} from '../../api/common'
-// import dialog from '../../plugin/dialog'
 
-
-export const toDFFT = (para) => {
-  para=para||{}
-  applyPay(para).then(res => {
-    let data = res.data
-
-    if (data.code == "000") {
-      let order = data.content.order
-      let url = data.content.url
-      todf(url, order)
-    } else {
-      // dialog.alert(data.desc)
-    }
-  }).catch(err => {
-
-    // dialog.alert('开通失败')
-    console.log(err);
-  })
-};
-export const statisticsDown = (desc,type,id,params) => {
-  let para = {
-    "pointKey": window.location.href,
-    "pointDesc": desc,
-    "pointType" : type,
-    "buzId" : id,
-    "buzParams" : params,
-  };
-  downStatistics(para).then(res => {
-    let data = res.data;
-  }).catch(err => {
-    console.log(err);
-  })
-};
 
 function isWeiXin(){
   var ua = window.navigator.userAgent.toLowerCase();
@@ -80,21 +44,95 @@ export const createA=(url,target)=>{
   URL.revokeObjectURL(elink.href) // 释放URL 对象
   document.body.removeChild(elink)
 }
-//开通法大大
-export const openFdd=(para,self)=>{
-  addlyFdd(para).then(res => {
-    let data = res.data
-    console.log(res)
-    if (data.code == "000") {
-      // dialog.alert(data.desc)
-      self.$store.dispatch('getUser')
-      
-    } else {
-      // dialog.alert(data.desc)
+
+
+//金额转换
+export const moneySend=(money)=>{
+  if (money == ''|| money == 'null'){
+    return '无'
+  }else{
+    if(money != null && money != 'undefined'){
+      money = money.toString().replace(/,/g, "");
     }
-  }).catch(err => {
-    console.log(err);
-  }).finally(res=>{
-    self.fddFlag=false
-  })
+    let num = parseFloat(money);
+    let strNum = parseFloat("a");
+    if (num.toString() != strNum.toString()){
+      if(num == 0){
+        return "无"
+      }else{
+        money = money.replace(/,/g, "")
+        if(num >= 100000000){
+          let amount = num/100000000;
+          let arr = (num/100000000).toString();
+          if (arr.indexOf(".") > 0){
+            let strh = arr.substring(arr.indexOf(".") + 1, arr.indexOf(".") + 9);
+            let str = parseInt(arr);
+            num = str.toLocaleString() + '.' + strh + "亿"
+          }else{
+            num = amount.toLocaleString() + "亿"
+          }
+        }else{
+          if(num >= 10000){
+            let amount = num/10000;
+            let arr = (num/10000).toString();
+            if (arr.indexOf(".") > 0){
+              let strh = arr.substring(arr.indexOf(".") + 1, arr.indexOf(".") + 5);
+              let str = parseInt(arr);
+              num = str.toLocaleString() + '.' + strh + "万"
+            }else{
+              num = amount.toLocaleString() + "万"
+            }
+          }else{
+            num = num.toLocaleString();
+          }
+        }
+        return num
+      }
+    }else{
+      return "无"
+    }
+  }
+}
+export const moneySendt=(money)=>{
+  if (money == '' || money == 'null'){
+    return '无'
+  }else{
+    if(money != null && money != 'undefined'){
+      money = money.toString().replace(/,/g, "");
+    }
+    let num = parseFloat(money);
+    let strNum = parseFloat("a");
+    if (num.toString() != strNum.toString()){
+      if(num == 0){
+        return "无"
+      }else{
+        if(num >= 100000000){
+          let amount = num/100000000;
+          let arr = (num/100000000).toString();
+          if (arr.indexOf(".") > 0){
+            let strh = arr.substring(arr.indexOf(".") + 1, arr.indexOf(".") + 9);
+            let str = parseInt(arr);
+            num = str + strh + "亿"
+          }else{
+            num = amount + "亿"
+          }
+        }else{
+          if(num >= 10000){
+            let amount = num/10000;
+            let arr = (num/10000).toString();
+            if (arr.indexOf(".") > 0){
+              let strh = arr.substring(arr.indexOf(".") + 1, arr.indexOf(".") + 5);
+              let str = parseInt(arr);
+              num = str + strh + "万"
+            }else{
+              num = amount + "万"
+            }
+          }
+        }
+        return num.toString()
+      }
+    }else{
+      return "无"
+    }
+  }
 }
