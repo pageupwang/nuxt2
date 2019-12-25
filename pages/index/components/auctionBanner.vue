@@ -1,8 +1,8 @@
 <template>
     <div class="auction-banner">
-      <router-link tag="div" class="auction-item" :to='{path:"/albumsList",query:{ id : item.id }}' v-for="(item,index) in session" :key='index'>
+      <nuxt-link  target='_blank' class="auction-item" :to='{path:"/albumsList",query:{ id : item.id }}' v-for="(item,index) in session" :key='index'>
         <img :src="item.detailImg" :alt="item.albumName">
-      </router-link>
+      </nuxt-link>
     </div>
 </template>
 
@@ -22,6 +22,9 @@
     .auction-banner{
       width: 100%;
       overflow: hidden;
+      a{
+        display: block;
+      }
       .auction-item{
         float: left;
         width: 100%;

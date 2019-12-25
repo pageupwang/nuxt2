@@ -4,7 +4,7 @@
       <div class="btn-lf" @click="btnLeft" v-if="page > 1"><</div>
       <div class="btn-rg" @click="btnRight" v-if="page < pageList">></div>
       <div class="hotSale-frame" :style="{width:frameWidth+'px',left: -moveWidth*(page-1)+'px'}">
-        <p class="tit-item" :class="{'tit-active':attractChecked==item.id}" v-for="(item,index) in navList.asset_property_names" :key='index' @click="getMain(item.id)">{{item.name}}</p>
+        <p class="tit-item" :class="{'tit-active':attractChecked==item.id}" v-for="(item,index) in nav.asset_property_names" :key='index' @click="getMain(item.id)">{{item.name}}</p>
       </div>
     </div>
     <div class="hot-frame clearfix">
@@ -15,17 +15,32 @@
 
 <script>
   import hotData from './hotSale/hotData'
-  import {hotSearch} from '../../../api/open/attract'
+  // import {hotSearch} from '../../../api/open/attract'
+  import request from '~/plugins/axios'
+  import {mapState} from 'vuex'
+  import {moneySend,moneySendt} from '../../../assets/js/commom'
   export default {
     name: "hotSale",
-    props: ["navList"],
+    props:{
+      mainList:{
+        type:Array,
+        default:function () {
+          return []
+        }
+      },
+      attractChecked:{
+        type:[String,Number],
+        default:0
+      },
+    },
+    
     components:{
       hotData
     },
     data() {
       return {
-        attractChecked: 0,
-        mainList : [],
+
+
         frameWidth: "",
         moveWidth: 1200,
         page: 1,
@@ -34,19 +49,42 @@
     },
     methods:{
       getTitle(){
-        if(this.navList.asset_property_names){
-          this.pageList = Math.ceil(this.navList.asset_property_names.length/5);
+        if(this.nav.asset_property_names){
+          this.pageList = Math.ceil(this.nav.asset_property_names.length/5);
           this.frameWidth = this.pageList*1201;
-          this.attractChecked = this.navList.asset_property_names[0].id;
-          this.getMain(this.attractChecked);
         }
       },
+      hotSearch(id){
+        return request.post('/open/assetProperty/search',{'assetPropertyId':id})
+      },
       getMain(id){
-        hotSearch(id).then(res => {
+        this.hotSearch(id).then(res => {
           let data = res.data;
           if (data.code === '000') {
-            this.attractChecked = id
-            this.mainList = data.content.list;
+            this.$emit('update:attractChecked',id)
+            let arr = data.content.list;
+            for(let i=0;i<arr.length;i++){
+              if(arr[i].activityType === 'enrolling'){
+                if(arr[i].category === '1'){
+                  arr[i].finalName = '保证金';
+                  arr[i].price = moneySendt(arr[i].deposit);
+                  arr[i].finalPrice = moneySend(arr[i].deposit);
+                }else{
+                  if(arr[i].category === '2'){
+                    arr[i].finalName = '债权本金';
+                  }else{
+                    arr[i].finalName = '市场参考价';
+                  }
+                  arr[i].price = moneySendt(arr[i].refPrice);
+                  arr[i].finalPrice = moneySend(arr[i].refPrice);
+                }
+              }else{
+                arr[i].price = moneySendt(arr[i].startingPrice);
+                arr[i].finalName = '起拍价';
+                arr[i].finalPrice = moneySend(arr[i].startingPrice);
+              }
+            }
+            this.$emit('update:mainList',arr)
           } else {
 
           }
@@ -67,13 +105,13 @@
         }
       },
     },
-    watch: {
-      navList: function () {
-        this.getTitle();
-      },
-    },
     created(){
       this.getTitle();
+    },
+    computed: {
+      ...mapState({
+        nav:state=>state.public.nav,
+      })
     },
   }
 </script>
@@ -125,11 +163,11 @@
           font-family: 'Microsoft YaHei UI Light';
         }
         .tit-active{
-          border-bottom: 6px solid #d41723;
+          border-bottom: 6px solid #b72e29;
         }
       }
       .hot-frame{
-        height: 240px;
+        min-height: 240px;
         background-color: #fff;
       }
     }

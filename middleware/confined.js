@@ -3,7 +3,9 @@ export default function ({$axios,redirect,route}) {
     return $axios.post('/confined/account/getAccountInfo')
       .catch(err => {
         if(err.response.status=='401'){
-          redirect({path:'/login'})
+          if(route.path.includes('member')){
+            redirect({path:'/login'})
+          }
         }
       })
   }

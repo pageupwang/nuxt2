@@ -6,15 +6,20 @@
     </div>
     <div class='info'>
       <div class="title">{{data.name}}</div>
-      <div class="auction"
-           v-show="data.deposit != null && data.depositLabel != null && data.deposit && data.depositLabel">
-        {{data.depositLabel}}：<span>￥{{data.deposit}}</span>
-      </div>
+      <template v-if="data.price&&data.price.length < 5">
+        <div class="money-main" v-show="data.depositLabel != null && data.depositLabel">
+          {{data.depositLabel}}：<div class="money-name" v-if="data.startingPrice != '无'">￥</div><div class="money-big">{{data.startingPrice}}</div>
+        </div>
+      </template>
+      <template v-else>
+        <div class="money-main" v-show="data.depositLabel != null && data.depositLabel">
+          {{data.depositLabel}}：<div class="money-name">￥</div><div class="money-num">{{data.startingPrice}}</div>
+        </div>
+      </template>
       <div class="auction" v-show="data.cityLabel != null && data.cityName != null && data.cityLabel && data.cityName">
         {{data.cityLabel}}：<span>{{data.cityName}}</span>
       </div>
-      <div class="auction"
-           v-show="this.data.mortgageLabel != null && this.data.mortgageValue != null && this.data.mortgageLabel && this.data.mortgageValue">
+      <div class="auction" v-show="this.data.mortgageLabel != null && this.data.mortgageValue != null && this.data.mortgageLabel && this.data.mortgageValue">
         {{data.mortgageLabel}}：<span>{{data.mortgageValue}}</span>
       </div>
     </div>
@@ -34,11 +39,28 @@
         let path = ""
         if (data.type == 1) {
           path = "/merchantDetail"
+        }else if(data.type == 4){
+          path = "/leaseMerchantDetail"
         } else {
           path='/loanDetail'
         }
-        this.$router.push({path: path, query: {activityId: data.id, type: data.type}})
+        let routeData = this.$router.resolve({ path: path, query: {activityId: data.id, type: data.type}});
+        window.open(routeData.href, '_blank');
       },
+    },
+    filters:{
+      despositFileter:function (value) {
+        let val=value.replace(/,/g,'')
+        if(val==''){
+          return '暂无'
+        }else{
+          if(Number(val)){
+            return '￥'+value
+          }else{
+            return '暂无'
+          }
+        }
+      }
     },
   }
 </script>
@@ -46,10 +68,10 @@
 <style scoped lang='scss'>
   .indexItem {
     float: left;
-    width: 240px;
-    padding-top: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    width: 230.5px;
+    padding-top: 15px;
+    margin-right: 9px;
+    margin-bottom: 5px;
     cursor: pointer;
     height: 270px;
     .index-img {
@@ -81,6 +103,30 @@
       line-height: 16px;
       position: relative;
       height: 69px;
+      .money-main{
+        font-size: 13px;
+        color: #010101;
+        line-height: 17px;
+        display: flex;
+        height: 30px;
+        align-items: flex-end;
+        .money-name{
+          color: #c02e2e;
+          font-size: 14px;
+          font-weight: bold;
+        }
+        .money-num{
+          font-size: 16px;
+          color: #c02e2e;
+          font-weight: bold;
+        }
+        .money-big{
+          font-size: 22px;
+          color: #c02e2e;
+          font-weight: bold;
+          line-height: 20px;
+        }
+      }
       .title {
         overflow: hidden;
         white-space: nowrap;
@@ -158,9 +204,12 @@
         background-color: #a9a9a9;
       }
       .starting {
-        background-color: #d41723;
+        background-color: #b72e29;
       }
 
     }
+  }
+  .indexItem:nth-child(4n){
+    margin-right: 0;
   }
 </style>

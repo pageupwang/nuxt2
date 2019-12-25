@@ -1,7 +1,8 @@
 <template>
-  <div class="indexTitle" :id='id'>
+  <div class="indexTitle clearfix" :id='id'>
     <div class="line"></div>{{title}}
     <span v-if="word">{{word}}</span>
+    <slot></slot>
   </div>
 </template>
 
@@ -21,7 +22,7 @@
     .line{
       width: 6px;
       height: 30px;
-      background-color: #d41723;
+      background-color: #b72e29;
       position: absolute;
       top: 50%;
       left: 0;
@@ -29,7 +30,7 @@
     }
     >span{
       color: #fff;
-      background-color: #D41723;
+      background-color: #b72e29;
       line-height: 16px;
       border-radius: 3px;
       padding: 4px 8px;

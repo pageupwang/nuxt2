@@ -1,10 +1,20 @@
 <template>
-  <div class="error">
-  
+  <div class="container">
+    <h1 v-if="error.statusCode === 404">
+      Page not found
+    </h1>
+    <h1 v-else>
+      An error occurred
+    </h1>
+    <NuxtLink to="/login">
+      Home page
+    </NuxtLink>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+  
   export default {
     props: {
       error: {
@@ -12,23 +22,21 @@
         default: null
       }
     },
-    name: "error",
-    components: {},
-    data() {
-      return {}
-    },
-    methods: {},
     created() {
-      console.log(this.error.statusCode);
-      if(this.error.statusCode==401){
-        this.$router.push({path: '/login' })
-      }
+      console.log(this.error);
     },
+    
   }
 </script>
 
-<style scoped lang="scss">
-  .error {
+<style scoped>
+  .container {
+    font-family: sans-serif;
+    padding-top: 10%;
+    text-align: center;
+  }
   
+  h1 {
+    font-size: 20px;
   }
 </style>
