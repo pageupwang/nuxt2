@@ -1,35 +1,13 @@
-<script src="../../../deve/default/default/360pai/src/store/actions.js"></script>
-<script src="../../../deve/default/default/360pai/src/store/index.js"></script>
 <template>
   <div class='top clearfix' :style="{'background':bg?'#d7d6d6':'#f5f5f5'}">
     <div>
-      <router-link to='/' class='iHoxzn fl' v-if='!agencyCode'>360PAI首页</router-link>
+      <router-link to='/' class='iHoxzn fl'>360PAI首页</router-link>
+
       <div class="iTGQtL fr clearfix">
         <div v-for="(item,index) in bars" class='fr'>
-          <router-link :to="item.path" :key='index' v-if="!item.blank&&!item.islogin">{{item.name}}</router-link>
+          <router-link :to="item.path" :key='index'>{{item.name}}</router-link>
         </div>
-        <div class='fr'>
-          <template v-if='!agencyCode'>
-            <span  @click='tojigou' v-if="user.agencyId">机构后台登录</span>
-          </template>
-        </div>
-        <div class="userInfo userInfo1" v-if='accountAuthName'>
-          <router-link to="/member"  class='username ' style='padding-right: 0;'>{{accountAuthName}}
-            <img src="../assets/img/down.png"alt="">
-          </router-link>
-          <div class='btn-box'>
-            <div>
-              <ul>
-                <template v-for="(item,index) in user.accountList">
-                  <li v-if='!item.default'><i>{{item.name}} </i> <button @click='useChange(item.partyId)'>切换</button></li>
-                </template>
-              </ul>
-            </div>
-            <button class="sc-iwsKbI cORWOV" @click='layout'>退出</button>
-          </div>
-          <span style='color: #1e4097;font-size: 12px;padding-left: 0;' v-if='user.accountList.length!==1'>切换</span>
-        </div>
-        <div class="userInfo " v-else>
+        <div class="userInfo " >
           <router-link to="/login" class='username'>
             登录注册
           </router-link>
@@ -41,7 +19,6 @@
 </template>
 
 <script>
-  import {agencyCode,toPartner,deleteMainCookie} from '../assets/js/config'
   import {mapState} from 'vuex'
   export default {
     name: "topbar",
@@ -52,71 +29,15 @@
           {name: '帮助中心', path: '/help/service'},
           {name: '新闻中心', path: '/news'},
           {name: '个人中心', path: '/member'},
-          {name: '我的关注', path: '/myCollect'},
+          {name: '我的关注', path: '/member/myCollect'},
         ],
         agencyCode:'',
       }
     },
     methods:{
-      useChange(partyId){
-        let that = this
-        let confirm = this.$confirm({
-          title: '提示',
-          text: '是否确认切换',
-          dangerouslyUseHTMLString: false,
-          button:
-            {
-              text: '确定',
-              ontap: function () {
-                confirm.close().then(function (res) {
-                  that.changeUser(partyId);
-                });
-              }
-            },
-        })
-      },
-      changeUser(partyId){
-        // let para = {
-        //   partyId:partyId
-        // }
-        // changeRole(para).then(res => {
-        //   let data = res.data
-        //   if (data.code === '000') {
-        //     this.$store.dispatch('getUser',true);
-        //   } else {
-        //     this.$message.error(data.desc)
-        //   }
-        // }).catch(err => {
-        //   console.log(err);
-        // })
-      },
-      tojigou(){
-        toPartner(true)
-      },
-      layout(){
-        // layOut().then(res => {
-        //   let data=res.data
-        //   if(data.code=='000'){
-        //     deleteMainCookie()
-        //     this.$store.commit('restcomponeyFlag')
-        //     this.$router.push({path: '/login' })
-        //   }
-        // }).catch(err => {
-        //   console.log(err);
-        // }).finally(res=>{
-        //
-        //
-        // })
-      },
+
     },
     created(){
-      this.agencyCode=agencyCode
-    },
-    computed: {
-      ...mapState({
-        accountAuthName:state=>state.user.accountAuthName,
-        user:state=>state.user
-      })
     },
   }
 </script>

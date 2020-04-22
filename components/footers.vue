@@ -1,15 +1,6 @@
 <template>
   <div id="footers" style='background-color: #f7f6f6; overflow:hidden;width: 100%;'>
     <div class="footer">
-      <div class="kebhIg">
-        <router-link v-for="(item,index) in helps" :key='index' :to="item.path" target="_blank">
-          <img :src="item.img" alt="">
-          <div>
-            <h3>{{item.name}}</h3>
-            <p>{{item.text}}</p>
-          </div>
-        </router-link>
-      </div>
       <div class="emrsbG">
         <div class="fzqMdO">
           <div class="hhzdce">
@@ -25,51 +16,11 @@
             <a href='javascript:;' v-for="(item,index) in pay" :key='index' @click='tosub(item)'>{{item.title}}</a>
           </div>
         </div>
-        <div class="service">
-          <div class="djzowy">
-            <div>
-              <img src="../assets/img/tel.png" alt="">
-              <p>
-                <span>客服电话</span>
-                <span style="color: rgb(23,48,101);font-size: 25px;" v-if='!$store.state.user.agencyCode'>400-015-0005</span>
-                <span style="color: rgb(23,48,101);font-size: 25px;" v-else>{{$store.state.user.agencyInfo.mobile}}</span>
-              </p>
-            </div>
-            <div>
-              <img src="../assets/img/cooperation.png" alt="">
-              <p>
-                <span>业务合作</span>
-                <span v-if='!$store.state.user.agencyCode'>021-3388-5987</span>
-                <span v-else>{{$store.state.user.agencyInfo.mobile}}</span>
-              </p>
-            </div>
-          </div>
-          <div class="grnhua">
-            <img src="../assets/img/code.png" alt="公众二维码">
-            <p>扫码关注</p>
-            <p>360PAI公众号</p>
-          </div>
-        </div>
       </div>
       <div class="isoqnl">
         <router-link v-for="(item,index) in abouts" :key='index' :to="item.path" target="_blank">
           {{item.text}}
         </router-link>
-      </div>
-      <div class="dzumdr">
-        <router-link to="/privacy" target="_blank">用户协议</router-link>
-        <router-link to="/conceal" target="_blank">隐私协议</router-link>
-        <span>©2018 360PAI.COM.All rights reserved.</span>
-        <a href="https://www.miibeian.gov.cn/" target="_blank">沪ICP备18016056号-1</a>
-        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202007656" target="_blank">
-          <img src="https://oeqbkxgti.qnssl.com/FinEALw7ifYIV2baxOAzDe1ctz1S.png" alt="">
-          沪公网安备 31011202007656号
-        </a>
-      </div>
-      <div class="zhizhao">
-        <router-link to="/jypzzs" target="_blank">拍卖经营许可证</router-link>
-        <div class="line"></div>
-        <router-link to="/yyzz" target="_blank">营业执照</router-link>
       </div>
     </div>
   </div>
@@ -77,16 +28,11 @@
 
 <script>
   import {mapState} from 'vuex'
-  
+
   export default {
     name: "footers",
     data() {
       return {
-        helps: [
-          {name: '全网联拍', path: '/help/joint', img: require('../assets/img/qwlp.png'), text: '海量资产 · 同步竞价 · 全网联动'},
-          {name: '支付安全', path: '/help/payment', img: require('../assets/img/safe.png'), text: '央行监管 · 资金安全'},
-          {name: '合同安全', path: '/help/signature', img: require('../assets/img/hetong.png'), text: '签约高效 · 实名认证 · 合法合规'}
-        ],
         abouts: [
           {text: '关于我们', path: '/about'},
           {text: '新闻中心', path: '/news'},
@@ -99,7 +45,7 @@
       tosub(item) {
         this.$router.push({path: '/help/problem'})
       },
-      
+
     },
     computed: {
       ...mapState({
@@ -214,7 +160,7 @@
           }
         }
       }
-      
+
     }
     .isoqnl {
       text-align: center;

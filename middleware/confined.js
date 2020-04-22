@@ -1,4 +1,5 @@
-export default function ({$axios,redirect,route}) {
+export default function ({$axios,redirect,route,...con}) {
+  console.log(con);
   if(route.path!='/login'){
     return $axios.post('/confined/account/getAccountInfo')
       .catch(err => {
@@ -9,5 +10,5 @@ export default function ({$axios,redirect,route}) {
         }
       })
   }
-  
+
 }
