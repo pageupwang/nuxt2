@@ -43,9 +43,6 @@ export default {
   },
   proxy: {
     '/rest-web': {
-      // target: 'http://172.17.102.27:6086',//冬冬
-      // target: 'http://supportcloud.360yhl.test',//沈威
-      //  target: 'https://www.360aidata.com',//沈威
       target: 'https://www.360pai.com',//传奇
       changeOrigin: true,
       pathRewrite: {
