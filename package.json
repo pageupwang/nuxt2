@@ -16,10 +16,8 @@
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "axios": "^0.19.2",
     "element-ui": "^2.13.2",
-    "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",
     "nuxt": "^2.13.3",
-    "qrcodejs2": "0.0.2",
     "secure-ls": "^1.2.6",
     "vue-meta-info": "^0.1.7",
     "vuex-persistedstate": "^2.7.1"
