@@ -1,4 +1,4 @@
-# 360pai-nuxt
+# nuxt
 
 > My laudable Nuxt.js project
 
