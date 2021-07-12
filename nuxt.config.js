@@ -43,7 +43,7 @@ export default {
   },
   proxy: {
     '/rest-web': {
-      target: 'https://www.360pai.com',//传奇
+      target: 'https://www.360pai.com',
       changeOrigin: true,
       pathRewrite: {
         '^/rest-web': '/rest-web'

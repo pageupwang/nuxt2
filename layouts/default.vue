@@ -1,20 +1,20 @@
 <template>
   <div>
-    <firstTop/>
+    <Header />
     <nuxt/>
     <footers />
   </div>
 </template>
 <script>
-  import firstTop from '../components/firstTop'
+  import Header from '../components/header'
   import footers from '../components/footers'
   export default {
     components: {
-      firstTop,
       footers,
+      Header,
     },
     computed: {
-    
+
     },
   }
 </script>

@@ -1,12 +1,14 @@
 <template>
-  <div class="news">
-    news
+  <div class="header">
+    <NuxtLink to='/'>首页</NuxtLink>
+    <NuxtLink to='/login'>登录</NuxtLink>
+    <NuxtLink to='/member/index'>个人中心</NuxtLink>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'news',
+    name: 'header',
     components: {},
     data() {
       return {}
@@ -19,7 +21,7 @@
 </script>
 
 <style scoped lang="scss">
-  .news {
+  .header {
 
   }
 </style>

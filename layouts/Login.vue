@@ -6,6 +6,7 @@
 </template>
 
 <script>
+
   import footers from '../components/footers'
   export default {
     name: "none",
@@ -17,13 +18,13 @@
     },
     methods: {},
     created() {
-    
+
     },
   }
 </script>
 
 <style scoped lang="scss">
   .none {
-  
+
   }
 </style>

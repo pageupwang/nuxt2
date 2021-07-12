@@ -13,8 +13,7 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
-  
+
   export default {
     props: {
       error: {
@@ -25,7 +24,7 @@
     created() {
       console.log(this.error);
     },
-    
+
   }
 </script>
 
@@ -35,7 +34,7 @@
     padding-top: 10%;
     text-align: center;
   }
-  
+
   h1 {
     font-size: 20px;
   }

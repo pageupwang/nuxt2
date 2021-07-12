@@ -1,27 +1,27 @@
 <template>
   <div class="index">
     <h1>
-      member
+      个人中心
     </h1>
   </div>
 </template>
 
 <script>
   export default {
-    name: "index",
+    name: "member",
     components: {},
     data() {
       return {}
     },
     methods: {},
     created() {
-    
+
     },
   }
 </script>
 
 <style scoped lang="scss">
   .index {
-  
+
   }
 </style>
