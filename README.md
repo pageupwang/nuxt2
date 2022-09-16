@@ -1,4 +1,4 @@
-# nuxt
+# nuxt2
 
 > My laudable Nuxt.js project
 
